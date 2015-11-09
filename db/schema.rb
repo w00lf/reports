@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151109145738) do
+ActiveRecord::Schema.define(version: 20151109153800) do
 
   create_table "campaigns", force: :cascade do |t|
     t.string   "name",         limit: 255
@@ -30,6 +30,14 @@ ActiveRecord::Schema.define(version: 20151109145738) do
     t.datetime "created_at",                              null: false
     t.datetime "updated_at",                              null: false
   end
+
+  create_table "reports", force: :cascade do |t|
+    t.integer  "campaign_id", limit: 4
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+  end
+
+  add_index "reports", ["campaign_id"], name: "index_reports_on_campaign_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  limit: 255, default: "", null: false
