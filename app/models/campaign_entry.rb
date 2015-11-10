@@ -1,4 +1,4 @@
-class Report < ActiveRecord::Base
+class CampaignEntry < ActiveRecord::Base
   belongs_to :campaign
 
   validates :campaign, presence: true

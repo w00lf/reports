@@ -3,24 +3,25 @@ class ReportsController < ApplicationController
 
   # GET /campaigns
   def index
-    @campaigns = paginate(Report)
+    @reports = paginate(Report)
   end
 
   # GET /campaigns/1
   def show
+    @report = Report.find(params[:id])
   end
 
   # GET /campaigns/new
   def new
-    @campaign = Report.new
+    @report = Report.new
   end
 
   # POST /campaigns
   def create
-    @campaign = Report.new(campaign_params)
+    @report = Report.new(campaign_params)
 
-    if @campaign.save
-      redirect_to @campaign, notice: 'Report was successfully created.'
+    if @report.save
+      redirect_to @report, notice: 'Report was successfully created.'
     else
       render :new
     end

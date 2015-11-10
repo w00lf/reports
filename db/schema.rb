@@ -11,25 +11,42 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151109153800) do
+ActiveRecord::Schema.define(version: 20151110073352) do
+
+  create_table "campaign_entries", force: :cascade do |t|
+    t.decimal  "media_spend",           precision: 10
+    t.decimal  "impressions",           precision: 10
+    t.integer  "clicks",      limit: 4
+    t.decimal  "ctr",                   precision: 10
+    t.integer  "conversions", limit: 4
+    t.decimal  "e_cpm",                 precision: 10
+    t.decimal  "e_cpc",                 precision: 10
+    t.decimal  "e_cpa",                 precision: 10
+    t.decimal  "spent",                 precision: 10
+    t.integer  "campaign_id", limit: 4
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
+  end
+
+  add_index "campaign_entries", ["campaign_id"], name: "index_campaign_entries_on_campaign_id", using: :btree
 
   create_table "campaigns", force: :cascade do |t|
     t.string   "name",         limit: 255
     t.date     "start_date"
     t.date     "end_date"
     t.decimal  "media_budget",             precision: 10
-    t.decimal  "media_spend",              precision: 10
-    t.decimal  "impressions",              precision: 10
-    t.integer  "clicks",       limit: 4
-    t.decimal  "ctr",                      precision: 10
-    t.integer  "conversions",  limit: 4
-    t.decimal  "e_cpm",                    precision: 10
-    t.decimal  "e_cpc",                    precision: 10
-    t.decimal  "e_cpa",                    precision: 10
-    t.decimal  "spent",                    precision: 10
     t.datetime "created_at",                              null: false
     t.datetime "updated_at",                              null: false
   end
+
+  create_table "comments", force: :cascade do |t|
+    t.text     "description", limit: 65535
+    t.integer  "report_id",   limit: 4
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
+
+  add_index "comments", ["report_id"], name: "index_comments_on_report_id", using: :btree
 
   create_table "reports", force: :cascade do |t|
     t.integer  "campaign_id", limit: 4
@@ -58,4 +75,7 @@ ActiveRecord::Schema.define(version: 20151109153800) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+  add_foreign_key "campaign_entries", "campaigns"
+  add_foreign_key "comments", "reports"
+  add_foreign_key "reports", "campaigns"
 end
