@@ -21,6 +21,8 @@ gem 'turbolinks'
 gem 'sdoc', '~> 0.4.0',          group: :doc
 
 gem 'devise'
+gem 'aldous'
+
 gem 'slim-rails'
 gem 'prawn'
 gem 'mysql2', '~> 0.4.1'

@@ -58,6 +58,7 @@ GIT
 GEM
   remote: https://rubygems.org/
   specs:
+    aldous (1.1.3)
     arel (6.0.3)
     awesome_print (1.6.1)
     bcrypt (3.1.10)
@@ -206,6 +207,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  aldous
   awesome_print
   byebug
   coffee-rails
