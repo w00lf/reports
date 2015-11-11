@@ -8,4 +8,8 @@ RSpec.describe Report, type: :model do
   it "Validates campaign presense" do
     expect(FactoryGirl.build(:report, campaign: nil)).to_not be_valid
   end
+
+  it "Validates pdf presense" do
+    expect(FactoryGirl.build(:report, pdf: nil)).to_not be_valid
+  end
 end

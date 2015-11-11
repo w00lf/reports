@@ -1,35 +1,41 @@
 class ReportsController < ApplicationController
+  include ::ActionController::Serialization
+  respond_to :json, :html
   before_filter :authenticate_user!
 
-  # GET /campaigns
   def index
     @reports = paginate(Report)
+    respond_with(@reports)
   end
 
-  # GET /campaigns/1
   def show
     @report = Report.find(params[:id])
+    respond_with(@report, serializer: ReportSerializer) do |format|
+      format.json { render json: ReportSerializer.new(@report).to_json }
+      format.pdf { render_pdf(@report.pdf.path) }
+    end
   end
 
-  # GET /campaigns/new
   def new
     @report = Report.new
   end
 
-  # POST /campaigns
   def create
     @report = Report.new(campaign_params)
-
-    if @report.save
-      redirect_to @report, notice: 'Report was successfully created.'
-    else
-      render :new
+    ReportPdfCreateService.perform(@report)
+    @report.save
+    respond_with(@report, serializer: ReportSerializer) do |format|
+      format.json { render json: ReportSerializer.new(@report).to_json }
     end
   end
 
   private
-  # Only allow a trusted parameter "white list" through.
   def campaign_params
     params.require(:report).permit(:campaign_id)
+  end
+
+  def render_pdf(file_path)
+    file = File.open(file_path).read.force_encoding('BINARY')
+    send_data(file, filename: "#{@report.campaign.name}.pdf", type: "application/pdf")
   end
 end

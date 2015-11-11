@@ -1,7 +1,20 @@
 p#notice = notice
-|Name:
-= @report.campaign.name
-|Created_at:
-= @report.created_at
+p
+  |Компания:
+  br
+  = @report.campaign.id
+p
+  |Создан:
+  br
+  = @report.created_at
+p
+  = link_to "Скачать PDF", report_path(@report, format: :pdf)
 
-= link_to 'Back', reports_path
+h3 Комментарии
+= form_for([@report, @report.comments.build], method: :post) do |f|
+  p= f.text_area :description
+  p= f.submit
+hr
+
+= render @report.comments
+= link_to 'Назад', reports_path

@@ -1,16 +1,16 @@
-h1 Listing reports
+h1 История отчетов
 
 table
   thead
     tr
-      th Campaign
-      th Created_at
+      th Компания
+      th Создан
 
   tbody
     - @reports.each do |report|
       tr
-        td = link_to report.campaign.name, report
+        td = link_to report.campaign.id, report
         td= report.created_at
 br
 
-= link_to 'New Report', new_report_path
+= link_to 'Новый отчет', new_report_path

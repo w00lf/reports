@@ -25,13 +25,6 @@ RSpec.describe ReportsController, type: :controller do
   # adjust the attributes here as well.
   let(:report) { FactoryGirl.create(:report) }
   let(:campaign) { FactoryGirl.create(:campaign) }
-  let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
-  }
-
-  let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
-  }
 
   shared_examples "authorized request" do |request, params|
     it "Returns redirect to login page" do
@@ -67,6 +60,47 @@ RSpec.describe ReportsController, type: :controller do
       it "assigns a new campaign as @campaign" do
         get :new
         expect(assigns(:report)).to be_a_new(Report)
+      end
+    end
+
+    describe "POST #create" do
+      let(:valid_attributes) {
+        { report: { campaign_id: campaign.id } }
+      }
+
+      let(:invalid_attributes) {
+        { report: { campaign_id: campaign.id + 1000 } }
+      }
+      context 'With valid attributes' do
+        it "It creates report" do
+          expect{
+            post :create, valid_attributes
+          }.to change(Report, :count)
+        end
+
+        it "It creates pdf attachment to report" do
+          post :create, valid_attributes
+          expect(assigns(:report).pdf).to be_present
+        end
+
+        it "It creates report on json call" do
+          expect{
+            post :create, valid_attributes.merge(format: :json)
+          }.to change(Report, :count)
+        end
+
+        it "It returns valid json on json create request" do
+          post :create, valid_attributes.merge(format: :json)
+          JSON::Validator.validate!("#{Rails.root}/spec/support/api/schemas/report.json", response.body)
+        end
+      end
+
+      context 'With invalid attributes' do
+        it "Does not creates report" do
+          expect{
+            post :create, invalid_attributes
+          }.to_not change(Report, :count)
+        end
       end
     end
   end

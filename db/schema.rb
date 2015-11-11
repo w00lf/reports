@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151110073352) do
+ActiveRecord::Schema.define(version: 20151111064802) do
 
   create_table "campaign_entries", force: :cascade do |t|
     t.decimal  "media_spend",           precision: 10
@@ -49,9 +49,13 @@ ActiveRecord::Schema.define(version: 20151110073352) do
   add_index "comments", ["report_id"], name: "index_comments_on_report_id", using: :btree
 
   create_table "reports", force: :cascade do |t|
-    t.integer  "campaign_id", limit: 4
-    t.datetime "created_at",            null: false
-    t.datetime "updated_at",            null: false
+    t.integer  "campaign_id",      limit: 4
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+    t.string   "pdf_file_name",    limit: 255
+    t.string   "pdf_content_type", limit: 255
+    t.integer  "pdf_file_size",    limit: 4
+    t.datetime "pdf_updated_at"
   end
 
   add_index "reports", ["campaign_id"], name: "index_reports_on_campaign_id", using: :btree

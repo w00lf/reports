@@ -46,6 +46,8 @@ RSpec.configure do |config|
   end
 
   config.before(:each) do
+    Paperclip::Attachment.default_options[:path] = ":rails_root/public/system/:rails_env/:class/:attachment/:id_partition/:filename"
+    allow_any_instance_of(Paperclip::Attachment).to receive(:save).and_return(true)
     DatabaseCleaner.start
   end
 

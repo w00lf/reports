@@ -1,0 +1,137 @@
+{
+  "type": "object",
+  "required": ["report"],
+  "properties": {
+    "report": {
+      "type": "object",
+      "required": [
+        "created_at",
+        "name",
+        "start_date",
+        "end_date",
+        "media_budget",
+        "campaign_entries",
+        "comments"
+      ],
+      "properties": {
+        "created_at": {
+          "type": "string"
+        },
+        "name": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "start_date": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "end_date": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "media_budget": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "campaign_entries": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "media_spend",
+              "impressions",
+              "clicks",
+              "ctr",
+              "conversions",
+              "e_cpm",
+              "e_cpc",
+              "e_cpa",
+              "spent"
+            ],
+            "properties": {
+              "media_spend": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "impressions": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "clicks": {
+                "type": [
+                  "integer",
+                  "null"
+                ]
+              },
+              "ctr": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "conversions": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "e_cpm": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "e_cpc": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "e_cpa": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "spent": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              }
+            }
+          }
+        },
+        "comments": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "description"
+            ],
+            "properties": {
+              "description": {
+                "type": [
+                  "text",
+                  "null"
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
